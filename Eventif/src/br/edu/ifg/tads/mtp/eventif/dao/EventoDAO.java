@@ -98,7 +98,7 @@ public class EventoDAO {
 	}
 	
 	
-	public EventoModel buscaEventos(int id){
+	public EventoModel buscaEventos1(int id){
 		try {
 			EventoModel evento = new EventoModel();
 			PreparedStatement stmt = new ConnectionFactory()
