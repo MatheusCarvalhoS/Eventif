@@ -8,11 +8,8 @@ import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import br.edu.ifg.tads.mtp.eventif.dao.AlunoDao;
 import br.edu.ifg.tads.mtp.eventif.dao.EnderecoDao;
 import br.edu.ifg.tads.mtp.eventif.dao.EventoDAO;
-import br.edu.ifg.tads.mtp.eventif.dao.PessoaDao;
-import br.edu.ifg.tads.mtp.eventif.model.AlunoModel;
 import br.edu.ifg.tads.mtp.eventif.model.EnderecoModel;
 import br.edu.ifg.tads.mtp.eventif.model.EventoModel;
 import br.edu.ifg.tads.mtp.eventif.util.VerificaCamposCriarEvento;
@@ -25,14 +22,28 @@ public class GerenteCriarEventoControl {
 	public JPanel getGerenteCriarEventoControl() {
 		criarEvento = new GerenteCriarEventoView();
 		painel = criarEvento.getGerenteCriarEventoView();
-		adicionaEventos();
+		adicionaEventosCriar();
 		return painel;
 	}
 
+	public JPanel getGerenteAlterarEventoControl(int id) {
+		
+		EventoModel evento = new EventoDAO().buscaEventos(id);
+		
+		criarEvento = new GerenteCriarEventoView();
+		painel = criarEvento.getGerenteCriarEventoView();
+		//adicionaEventosAlterar();
+		criarEvento.getBtCriar().setText("Alterar");
+		criarEvento.getTxNome().setText(evento.getNome());
+		return painel;
+	}
 	
-	public void adicionaEventos() {
+
+	
+	public void adicionaEventosCriar() {
 		criarEvento.getBtCriar().addActionListener(new ActionListener() {
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (new VerificaCamposCriarEvento()
