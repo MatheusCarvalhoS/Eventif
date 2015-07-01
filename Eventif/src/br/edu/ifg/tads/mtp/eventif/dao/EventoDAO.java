@@ -136,6 +136,45 @@ public class EventoDAO {
 		}
 	}
 	
+	
+	public EventoModel buscaEventos(int id){
+		try {
+			EventoModel evento = new EventoModel();
+			PreparedStatement stmt = new ConnectionFactory()
+					.getConnection()
+					.prepareStatement(
+							"select * from evento where(idEvento = ?);");
+			
+			stmt.setInt(1,id);
+			ResultSet result = stmt.executeQuery();
+			if(result.next()){
+				
+				evento.setIdEvento(result.getLong("idEvento"));
+				evento.setNome(result.getString("nomeEvento"));
+				
+				Calendar dataInicio = Calendar.getInstance();
+				dataInicio.setTime(result.getDate("dataInicio"));
+				
+				evento.setDataInicio(dataInicio);
+				
+				Calendar dataFim = Calendar.getInstance();
+				dataFim.setTime(result.getDate("dataEncerramento"));
+				
+				evento.setDataFim(dataFim);
+				
+			}else{
+				JOptionPane.showMessageDialog(null, "Erro ao encontrar o Evento selecionado! ");
+			}
+			result.close();
+			stmt.close();
+			return evento;
+			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro na conexão com o banco de dados! ");
+			throw new RuntimeException(e);
+		}
+	}
+	
 
 	/*
 	 * public void adiciona(EventoModel evento) { String sql =
